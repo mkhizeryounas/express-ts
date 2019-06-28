@@ -1,6 +1,6 @@
 import HttpStatus from "http-status-codes";
 import { Request, Response, NextFunction } from "express";
-
+import { Result } from "../modules/interfaces";
 declare global {
   namespace Express {
     interface Response {
@@ -10,7 +10,7 @@ declare global {
 }
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  res.reply = (responseJson: any): void => {
+  res.reply = (responseJson: Result): void => {
     let data =
       typeof responseJson.data === "undefined" ? {} : responseJson.data;
     let statusCode =
@@ -42,7 +42,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-function generateMessage(code: string): string {
+function generateMessage(code: number): string {
   let message = common_messages.hasOwnProperty(code)
     ? common_messages[code]
     : null;
